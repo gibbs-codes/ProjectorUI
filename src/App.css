@@ -11,9 +11,9 @@
   font-style: normal;
 }
 h1 {
-  font-size: 10rem;
-  margin-bottom: 5%;
-  margin-top: 6%;
+  font-size: 8rem;
+  margin-bottom: 2%;
+  margin-top: 1%;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
@@ -62,7 +62,7 @@ h1 {
 
 .transport {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 }
 

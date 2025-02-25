@@ -23,8 +23,9 @@ h1 {
 .allRoutes {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
+  margin-top: 5%;
 }
 
 .redDot {

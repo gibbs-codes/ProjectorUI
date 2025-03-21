@@ -6,9 +6,13 @@ export default function Weather(){
     const [tempNow, setTempNow] = useState('')
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        getWeather()
-    },[])
+
+     useEffect(() => {
+        const interval = setInterval(() => {
+             getWeather()
+        }, 3600000);
+            return () => clearInterval(interval);
+    }, []);
 
     async function getWeather() {
         fetch(process.env.REACT_APP_WEATHER_URL)

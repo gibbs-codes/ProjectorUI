@@ -1,19 +1,52 @@
 .App {
-  text-align: center;
-  background-color: #000000;
+  /* background-image: url('../backgroundForReact.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  background-color: black;
   color: white;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 100%;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
 }
+
+.clock{
+  position: fixed;
+  top: 23px;
+  right: 23px;
+  width: 553px;
+  height: 387px;
+}
+
+.canvasRight{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  position: fixed;
+  top: 23px;
+  right: 23px;
+  width: 553px;
+  height: 387px;
+}
+
+.canvasCenter{
+  position: fixed;
+  top: 151px;
+  left: 420px;
+  width: 371px;
+  height: 560px;
+}
+
+
 h1 {
   font-size: 8rem;
+  margin:0;
   margin-bottom: 2%;
-  margin-top: 1%;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
@@ -21,11 +54,18 @@ h1 {
 }
 
 .allRoutes {
+  position: fixed;
+  top:35px;
+  text-align: center;
+  width: 290px;
+  height: 725px;
+  margin-left: 15px;
+}
+
+.canvasLeft{
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 5%;
+  flex-direction: column;
+  text-align: center;
 }
 
 .redDot {
@@ -53,6 +93,7 @@ h1 {
   flex-direction: column;
   width: 10rem;
   justify-items: center;
+  height: 190px;
 }
 
 .routeHead{

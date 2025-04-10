@@ -19,7 +19,7 @@ export default function Transit() {
 
 
   async function getThings() {
-    fetch('http://localhost:3001/api/data')
+    fetch('https://cta-all-the-way-api-9915a41bdd57.herokuapp.com/api/data')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

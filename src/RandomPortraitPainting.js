@@ -34,8 +34,8 @@ function RandomPortraitPainting() {
 
   return (
     <div style={{
-      width: '371px',
-      height: '560px',
+      width: '375px',
+      height: '580px',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',

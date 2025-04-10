@@ -29,16 +29,16 @@
   text-align: center;
   position: fixed;
   top: 23px;
-  right: 23px;
+  right: 33px;
   width: 553px;
   height: 387px;
 }
 
 .canvasCenter{
   position: fixed;
-  top: 153px;
+  top: 155px;
   left: 440px;
-  width: 371px;
+  width: 375px;
   height: 580px;
 }
 

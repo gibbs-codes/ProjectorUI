@@ -37,7 +37,7 @@
 .canvasCenter{
   position: fixed;
   top: 151px;
-  left: 420px;
+  left: 450px;
   width: 371px;
   height: 560px;
 }
@@ -50,6 +50,15 @@ h1 {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
+  font-style: normal;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin:5px 0;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
   font-style: normal;
 }
 
@@ -71,7 +80,6 @@ h1 {
 .redDot {
   height: 25px;
   margin-top: 18px;
-  margin-right: 18px;
   width: 25px;
   background-color: #c10101;
   border-radius: 50%;
@@ -81,7 +89,6 @@ h1 {
 .brownDot {
   height: 25px;
   margin-top: 18px;
-  margin-right: 18px;
   width: 25px;
   background-color: #673c01;
   border-radius: 50%;
@@ -112,4 +119,9 @@ ul {
   list-style-type: none;
   padding: 0;
   text-align: center;
+  margin: 0;
+}
+li {
+  margin: 5px 0;
+  font-family: "Inter", sans-serif;
 }

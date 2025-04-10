@@ -8,28 +8,29 @@ export default function Weather(){
 
 
      useEffect(() => {
+         async function getWeather() {
+             fetch(process.env.REACT_APP_WEATHER_URL)
+             .then(response => {
+                 if (!response.ok) {
+                     throw new Error('Network response was not ok');
+                 }
+                 return response.json();
+             }).then(data => {
+                 setFeelsNow(data.current.feelslike_f)
+                 setAveTempToday(data.forecast.forecastday[0].day.avgtemp_f)
+                 setTempNow(data.current.temp_f)
+                 setLoading(false)
+             }).catch(error => {
+                 console.error('There has been a problem with your fetch operation:', error);
+             })
+         }
+        getWeather()
         const interval = setInterval(() => {
              getWeather()
         }, 3600000);
             return () => clearInterval(interval);
     }, []);
 
-    async function getWeather() {
-        fetch(process.env.REACT_APP_WEATHER_URL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        }).then(data => {
-            setFeelsNow(data.current.feelslike_f)
-            setAveTempToday(data.forecast.forecastday[0].day.avgtemp_f)
-            setTempNow(data.current.temp_f)
-            setLoading(false)
-        }).catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        })
-    }
 
 
     return (

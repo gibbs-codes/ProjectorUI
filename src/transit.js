@@ -11,6 +11,25 @@ export default function Transit() {
     const [brownNorth, setBrownNorth] = useState([]);
 
     useEffect(() => {
+      async function getThings() {
+        fetch('https://cta-all-the-way-api-9915a41bdd57.herokuapp.com/api/data')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          }).then(data => { 
+            setBrownNorth(data.brown.north);
+            setBrownSouth(data.brown.south);
+            setRedNorth(data.red.north);
+            setRedSouth(data.red.south);
+            setBusEast(data.buses.east);
+            setBusWest(data.buses.west);
+          }).catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+          })
+      }
+      getThings();
         const interval = setInterval(() => {
             getThings();
         }, 60000);
@@ -18,24 +37,6 @@ export default function Transit() {
     }, []);
 
 
-  async function getThings() {
-    fetch('https://cta-all-the-way-api-9915a41bdd57.herokuapp.com/api/data')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      }).then(data => { 
-        setBrownNorth(data.brown.north);
-        setBrownSouth(data.brown.south);
-        setRedNorth(data.red.north);
-        setRedSouth(data.red.south);
-        setBusEast(data.buses.east);
-        setBusWest(data.buses.west);
-      }).catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-      })
-  }
 
     return (
         <div className='allRoutes'>
@@ -50,7 +51,7 @@ export default function Transit() {
                     <ul>
                       {redNorth && 
                       redNorth.map((train, index) => (
-                        <p key={index}>{checkTime(train)}</p>
+                        <li key={index}>{checkTime(train)}</li>
                       ))}
                     </ul>
                 </div>
@@ -61,7 +62,7 @@ export default function Transit() {
                   <ul>
                     {redSouth &&
                     redSouth.map((train, index) => (
-                      <p key={index}>{checkTime(train)}</p>
+                      <li key={index}>{checkTime(train)}</li>
                     ))}
                   </ul>
                 </div>
@@ -77,7 +78,7 @@ export default function Transit() {
                   <ul>
                     {brownNorth &&
                     brownNorth.map((train, index) => (
-                      <p key={index}>{checkTime(train)}</p>
+                      <li key={index}>{checkTime(train)}</li>
                     ))}
                   </ul>
                   </div>
@@ -88,7 +89,7 @@ export default function Transit() {
                     <ul>
                       {brownSouth && 
                       brownSouth.map((train, index) => (
-                        <p key={index}>{checkTime(train)}</p>
+                        <li key={index}>{checkTime(train)}</li>
                       ))}
                     </ul>
                   </div>
@@ -104,7 +105,7 @@ export default function Transit() {
                   <ul>
                     {busEast && 
                     busEast.map((bus, index) => (
-                      <p key={index}>{checkTime(bus)}</p>
+                      <li key={index}>{checkTime(bus)}</li>
                     ))}
                   </ul>
                 </div>
@@ -115,7 +116,7 @@ export default function Transit() {
                   <ul>
                     {busWest &&
                     busWest.map((bus, index) => (
-                      <p key={index}>{checkTime(bus)}</p>
+                      <li key={index}>{checkTime(bus)}</li>
                     ))}
                   </ul>
                 </div>

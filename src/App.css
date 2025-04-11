@@ -33,6 +33,7 @@
   right: 33px;
   width: 553px;
   height: 387px;
+  filter: 'brightness(50%)';
 }
 
 .canvasCenter{

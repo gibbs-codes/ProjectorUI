@@ -5,7 +5,7 @@ function RandomPortraitPainting() {
 
   useEffect(() => {
     async function fetchPainting() {
-      const res = await fetch('https://api.artic.edu/api/v1/artworks/search?q=modernism%20painting&fields=id,title,image_id,thumbnail,dimensions&limit=100');
+      const res = await fetch('https://api.artic.edu/api/v1/artworks/search?q=abstract%20painting&fields=id,title,image_id,thumbnail,dimensions&limit=100');
       const data = await res.json();
       const portraits = data.data.filter(art => {
         const width = art.thumbnail?.width;
@@ -34,15 +34,15 @@ function RandomPortraitPainting() {
 
   return (
     <div style={{
-      width: '375px',
-      height: '580px',
+      width: '380px',
+      height: '585px',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <img src={painting.imageUrl} alt={painting.title}  style={{ maxWidth: '110%', maxHeight: '110%', objectFit: 'cover' }}/>
+      <img src={painting.imageUrl} alt={painting.title}  style={{ maxWidth: '140%', maxHeight: '140%', minWidth: '100%', minHeight: '100%', objectFit: 'cover' }}/>
     </div>
   );
 }

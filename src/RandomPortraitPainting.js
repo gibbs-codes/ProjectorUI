@@ -42,7 +42,7 @@ function RandomPortraitPainting() {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <img src={painting.imageUrl} alt={painting.title}  style={{ maxWidth: '140%', maxHeight: '140%', minWidth: '100%', minHeight: '100%', objectFit: 'cover' }}/>
+      <img src={painting.imageUrl} alt={painting.title}  style={{ maxWidth: '140%', maxHeight: '140%', minWidth: '100%', minHeight: '100%', objectFit: 'cover', filter: 'brightness(70%)' }}/>
     </div>
   );
 }

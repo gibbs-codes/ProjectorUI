@@ -13,6 +13,7 @@
   font-weight: 700;
   font-style: normal;
   filter: 'brightness(70%)';
+  cursor: none;
 }
 
 .clock{

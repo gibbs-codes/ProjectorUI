@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import checkTime from "./checkTime";
 
+
+
 export default function Transit() {
     const [busEast, setBusEast] = useState([]);
     const [busWest, setBusWest] = useState([]);
@@ -12,13 +14,17 @@ export default function Transit() {
 
     useEffect(() => {
       async function getThings() {
-        fetch('https://cta-all-the-way-api-9915a41bdd57.herokuapp.com/api/data')
+        console.log(process.env.REACT_APP_CTA_URL)
+        fetch(process.env.REACT_APP_CTA_URL)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-            return response.json();
+            const res = response.json();
+            console.log(res)
+            return res;
           }).then(data => { 
+            console.log(data)
             setBrownNorth(data.brown.north);
             setBrownSouth(data.brown.south);
             setRedNorth(data.red.north);
@@ -39,8 +45,8 @@ export default function Transit() {
 
 
     return (
-        <div className='allRoutes'>
-          <div className="canvasLeft">
+        <div className="canvasLeft">
+          <div className='allRoutes'>
             <div>
               <span className='redDot'></span>
               <div className='transport'>
@@ -100,7 +106,7 @@ export default function Transit() {
               <div className='transport'>
                 <div className="oneRoute">
                   <div className='routeHead'>
-                    <h3>East</h3>
+                    <h3>EAST</h3>
                   </div>
                   <ul>
                     {busEast && 
@@ -111,7 +117,7 @@ export default function Transit() {
                 </div>
                 <div className="oneRoute">
                   <div className='routeHead'>
-                    <h3>West</h3>
+                    <h3>WEST</h3>
                   </div>
                   <ul>
                     {busWest &&

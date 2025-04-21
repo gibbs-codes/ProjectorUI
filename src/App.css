@@ -1,14 +1,10 @@
 .App {
-  /* background-image: url('../backgroundForReact.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
   background-color: black;
   color: white;
   height: 100%;
   width: 100%;
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
+  font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
@@ -18,65 +14,51 @@
 
 .clock{
   position: fixed;
-  top: 23px;
-  right: 28px;
-  width: 553px;
-  height: 387px;
+  display: block;
+  top: 18px;
+  right: 570px;
+  width: 653px;
+  height: 487px;
 }
 
 .canvasRight{
+  position: fixed;
+  top: 55px;
+  right: 38px;
+  width: 710px;
+  height: 490px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  text-align: center;
-  position: fixed;
-  top: 23px;
-  right: 33px;
-  width: 553px;
-  height: 387px;
   filter: 'brightness(50%)';
 }
 
 .canvasCenter{
   position: fixed;
-  top: 155px;
-  left: 440px;
-  width: 375px;
-  height: 580px;
-}
-
-
-h1 {
-  font-size: 8rem;
-  margin:0;
-  margin-bottom: 2%;
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
-}
-
-h3 {
-  font-size: 1.5rem;
-  margin:5px 0;
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.allRoutes {
-  position: fixed;
-  top:35px;
-  text-align: center;
-  width: 290px;
-  height: 725px;
-  margin-left: 15px;
+  top: 215px;
+  left: 560px;
+  width: 480px;
+  height: 720px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  filter: 'brightness(50%)';
 }
 
 .canvasLeft{
+  position: fixed;
+  top:40px;
+  text-align: center;
+  width: 400px;
+  height: 950px;
+  margin-left: 15px;
+}
+
+
+.allRoutes{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   margin-top: 25px;
 }
@@ -104,7 +86,7 @@ h3 {
   flex-direction: column;
   width: 10rem;
   justify-items: center;
-  height: 190px;
+  height: 275px;
 }
 
 .routeHead{
@@ -119,6 +101,16 @@ h3 {
   justify-content: center;
 }
 
+.weather {
+  position: fixed;
+  top: 575px;
+  right: 165px;
+  display: flex;
+  width: 500px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -127,5 +119,24 @@ ul {
 }
 li {
   margin: 5px 0;
-  font-family: "Inter", sans-serif;
+  font-family: "Manrope", sans-serif;
+}
+
+h1 {
+  font-size: 5.5rem;
+  margin:0;
+  margin-bottom: 2%;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-family: "Manrope", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+h3 {
+  font-size: 1.5rem;
+  margin:5px 0;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
 }

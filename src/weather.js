@@ -36,7 +36,7 @@ export default function Weather(){
     return (
         <div>
             {loading && <></>}
-            {!loading && <div style={{width: '80%', height: '30%', margin:'auto', marginTop:'2em', marginBottom:'-1em', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            {!loading && <div className='weather'>
                 <div>
                     <div style={{fontSize:'2.5em'}}>{tempNow}°F</div>
                     <div>NOW</div>

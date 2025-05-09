@@ -1,27 +1,21 @@
 import './App.css';
-import Clock from 'react-live-clock';
-import Transit from './transit';
-import Events from './events';
-import Weather from './weather';
-import RandomPortraitPainting from './RandomPortraitPainting';
-import RandomLandscapePainting from './RandomLandscapePainting';
+import React, {useEffect, useState} from 'react'
+import Weather from './displays/weather';
+import CanvasLeft from './canvases/CanvasLeft.js';
+import CanvasCenter from './canvases/CanvasCenter.js';
+import CanvasRight from './canvases/CanvasRight.js';
+import ClockThing from './displays/Clock.js';
 
 function App(){
+  const [profile, setProfile] = useState('default')
+
   return (
     <div className="App" >
-      <div className='canvasRight'>
-        <RandomLandscapePainting/>
-      </div>
-      <div className='clock'>
-        <h1>
-          <Clock format={'h:mm'} interval={1000} ticking={true} />
-        </h1>
-      </div>
-      <Weather />
-      <div className='canvasCenter'>
-        <RandomPortraitPainting/>
-      </div>
-      <Transit />
+        <CanvasRight profile={profile} />
+        <ClockThing />
+        <Weather />
+        <CanvasCenter profile={profile} />
+        <CanvasLeft profile={profile} />
     </div>
   );
 }

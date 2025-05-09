@@ -41,7 +41,6 @@
   height: 720px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   filter: 'brightness(50%)';
 }
 
@@ -60,7 +59,7 @@
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  margin-top: 25px;
+  margin-top: 45px;
 }
 
 .redDot {
@@ -139,4 +138,20 @@ h3 {
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0;
+  font-size: medium;
+  margin-left: 5%;
+}
+
+.event{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
 }

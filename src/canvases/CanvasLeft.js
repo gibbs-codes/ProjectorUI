@@ -7,9 +7,7 @@ export default function CanvasLeft(props){
     <div className='canvasLeft'>
       {props.profile === 'default' ? <Transit /> : <></>}
       {props.profile === 'morning' ? <VerticalTimeline /> : <></>}
-      {props.profile === 'afternoon' ? <Transit /> : <></>}
-      {props.profile === 'evening' ? <Transit /> : <></>}
-      {props.profile === 'entertain' ? <Transit /> : <></>}
+      {props.profile === 'work' ? <Transit /> : <></>}
     </div>
   )
 }

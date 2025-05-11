@@ -1,5 +1,6 @@
 import Art from '../displays/art';
 import ToDos from '../displays/toDos.js';
+import NextUp from '../displays/nextUp.js';
 
 export default function CanvasRight(props){
 
@@ -7,9 +8,7 @@ export default function CanvasRight(props){
     <div className='canvasRight'>
       {props.profile === 'default' ? <Art/> : <></>}
       {props.profile === 'morning' ? <ToDos /> : <></>}
-      {props.profile === 'afternoon' ? <Art /> : <></>}
-      {props.profile === 'evening' ? <Art /> : <></>}
-      {props.profile === 'entertain' ? <Art /> : <></>}
+      {props.profile === 'work' ? <NextUp /> : <></>}
     </div>
   )
 }

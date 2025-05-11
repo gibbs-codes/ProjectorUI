@@ -4,7 +4,7 @@ const styles = ['Cubism', 'Expressionism', 'Surrealism', 'Abstract', 'Minimalism
 
 function Art(props) {
     const [painting, setPainting] = useState(null);
-    const vert = props.vert;
+    const vert = props.vert ? true : false;
 
     useEffect(() => {
         async function fetchPainting() {

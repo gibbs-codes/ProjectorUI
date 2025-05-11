@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 
-export default function Events(){
-    const [today, setToday] = useState([])
+export default function Habits(){
+    const [habits, setHabits] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function updateToday() {
-            fetch(process.env.REACT_APP_EVENTS_URL)
+            fetch(process.env.REACT_APP_HABITICA_URL)
             .then(response => {
                 console.log(response)
                 if (!response.ok) {
@@ -14,8 +14,7 @@ export default function Events(){
                 }
                 return response.json();
             }).then(data => { 
-                console.log(data)
-                setToday(data);
+                setHabits(data.habits);
             }).catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             })
@@ -29,15 +28,15 @@ export default function Events(){
     return (
         <div>
             {loading ? <></> :
-                <div className="calendar">
-                    <h2>Today's Agenda:</h2>
-                    {today &&
-                    today.map((event, index) => (
+                <div className="habits">
+                    <h2>Today's Habits:</h2>
+                    {habits &&
+                    habits.map((event, index) => (
                         <div key={index} className='event'>
-                            <h3>{event.title}</h3>
-                            <div>{event.description}</div>
+                            <h3>{event.text}</h3>
+                            {/* <div>{event.notes}</div>
                             <div>{event.start}</div>
-                            <div>{event.location}</div>
+                            <div>{event.location}</div> */}
                         </div>
                     ))}
                 </div>

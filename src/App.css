@@ -23,10 +23,10 @@
 
 .canvasRight{
   position: fixed;
-  top: 55px;
-  right: 38px;
-  width: 710px;
-  height: 490px;
+  top: 54px;
+  right: 41px;
+  width: 705px;
+  height: 491px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -37,8 +37,8 @@
   position: fixed;
   top: 215px;
   left: 560px;
-  width: 480px;
-  height: 720px;
+  width: 470px;
+  height: 722px;
   display: flex;
   flex-direction: column;
   filter: 'brightness(50%)';
@@ -46,11 +46,11 @@
 
 .canvasLeft{
   position: fixed;
-  top:40px;
+  top:65px;
   text-align: center;
-  width: 400px;
-  height: 950px;
-  margin-left: 15px;
+  width: 370px;
+  height: 930px;
+  left: 39px;
 }
 
 
@@ -63,10 +63,10 @@
 }
 
 .redDot {
+  background-color: #cf0513;
   height: 25px;
   margin-top: 18px;
   width: 25px;
-  background-color: #c10101;
   border-radius: 50%;
   display: inline-block;
 }

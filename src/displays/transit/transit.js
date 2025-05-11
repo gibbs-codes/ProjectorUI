@@ -42,9 +42,8 @@ export default function Transit(props) {
 
 
   return (
-    <div className="canvasLeft">
+    <div>
       <div className='allRoutes'>
-
         <div>
           <span className='redDot'></span>
           <div className='transport'>

@@ -8,7 +8,6 @@ export default function Habits(){
         async function updateToday() {
             fetch(process.env.REACT_APP_HABITICA_URL)
             .then(response => {
-                console.log(response)
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -29,13 +28,13 @@ export default function Habits(){
         <div>
             {loading ? <></> :
                 <div className="habits">
-                    <h2>Today's Habits:</h2>
+                    <h2 className="habits">Today's Habits</h2>
                     {habits &&
                     habits.map((event, index) => (
-                        <div key={index} className='event'>
-                            <h3>{event.text}</h3>
-                            {/* <div>{event.notes}</div>
-                            <div>{event.start}</div>
+                        <div key={index} className='habit'>
+                            <h3 className="habits">{event.text}</h3>
+                            <p>Streak: {event.counterUp}</p>
+                            {/* <div>{event.start}</div>
                             <div>{event.location}</div> */}
                         </div>
                     ))}

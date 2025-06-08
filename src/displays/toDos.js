@@ -8,12 +8,13 @@ export default function ToDos(){
         async function updateToday() {
             fetch(process.env.REACT_APP_HABITICA_URL)
             .then(response => {
-                console.log(response)
+                console.log('Response status:', response);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             }).then(data => { 
+                console.log('Data received:', data);
                 setToDos(data.todos);
             }).catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -29,11 +30,11 @@ export default function ToDos(){
         <div>
             {loading ? <></> :
                 <div className="todoList">
-                    <h2>Today's toDos:</h2>
+                    <h2 className="todoList">To Dos:</h2>
                     {toDos &&
                     toDos.map((event, index) => (
-                        <div key={index} className='event'>
-                            <h3>{event.text}</h3>
+                        <div key={index} className='toDo'>
+                            <h3 className="todoList">{event.text}</h3>
                             {/* <div>{event.notes}</div>
                             <div>{event.start}</div>
                             <div>{event.location}</div> */}

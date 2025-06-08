@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { format, parse, isAfter } from 'date-fns';
+import { format, parse, isAfter, parseISO } from 'date-fns';
 import { MapPin } from 'lucide-react';
+import Art from './art';
 
 const NextUp = () => {
   const [loading, setLoading] = useState(true);
@@ -19,8 +20,11 @@ const NextUp = () => {
 
         const upcomingEvent = data
           .map(event => {
-            const startTime = parse(event.start, 'h:mm a', now);
-            const endTime = parse(event.end, 'h:mm a', now);
+            const startTime = parseISO(event.start);
+            console.log('Parsed start time:', startTime);
+            const endTime = parseISO(event.end);
+            console.log('Parsed end time:', endTime);
+            console.log('Now:', now);
             return { ...event, startTime, endTime };
           })
           .filter(event => isAfter(event.startTime, now))
@@ -41,14 +45,15 @@ const NextUp = () => {
     return <div className="p-4 bg-gray-200 rounded-xl">Loading events...</div>;
   }
 
-  if (!nextEvent) {
-    return <div className="p-4 bg-gray-200 rounded-xl">No more events today.</div>;
+  if (!loading && !nextEvent) {
+    return <Art/>;
   }
 
   const { title, location, description, startTime, endTime } = nextEvent;
 
   return (
     <div className="nextUp">
+      {console.log(nextEvent)}
       <h2 className="nextTitle">Next Up: {title}</h2>
       <div className="nextRich">
         <div className="nextLocation">
@@ -56,7 +61,7 @@ const NextUp = () => {
         </div>
         <p className="nextDetails">{description || 'No details provided'}</p>
         <p className="nextTime">
-            {format(startTime, 'h:mm a')} - {format(endTime, 'h:mm a')}
+             {format(startTime, 'h:mm a')} - {format(endTime, 'h:mm a')}
         </p>
       </div>
     </div>

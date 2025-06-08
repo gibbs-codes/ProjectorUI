@@ -18,10 +18,19 @@ const HourBlock = styled.div`
   align-items: center;
 `;
 
+const colors = [
+  'rgba(132, 0, 149, 0.68)', // Purple
+  'rgba(0, 123, 255, 0.68)', // Blue
+  'rgba(40, 167, 69, 0.68)', // Green
+  'rgba(255, 193, 7, 0.68)', // Yellow
+  'rgba(220, 53, 69, 0.68)', // Red
+  'rgba(23, 162, 184, 0.68)', // Teal
+];
+
 const EventBlock = styled.div`
   position: absolute;
-  left: 10px;
-  width: 350px;
+  left: 50px;
+  width: 320px;
   background-color:rgba(132, 0, 149, 0.68);
   color: #fff;
   padding: 5px;
@@ -38,15 +47,15 @@ const hours = [
 ];
 
 const calculatePosition = (startTime, endTime) => {
-  const startHour = 6;
-  const totalMinutes = (24 - startHour) * 60;
+  const startHour = 6; // Start of the timeline (6 AM)
+  const totalMinutes = (24 - startHour) * 60; // Total minutes in the timeline
 
-  const parseTime = (time) => {
-    const [timePart, period] = time.split(' ');
-    let [hour, minute] = timePart.split(':').map(Number);
-    if (period === 'PM' && hour !== 12) hour += 12;
-    if (period === 'AM' && hour === 12) hour = 0;
-    return { hour, minute };
+  const parseTime = (isoString) => {
+    const date = new Date(isoString);
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+    };
   };
 
   const { hour: startHourPart, minute: startMinutePart } = parseTime(startTime);
@@ -55,7 +64,7 @@ const calculatePosition = (startTime, endTime) => {
   const startMinutes = (startHourPart * 60 + startMinutePart) - (startHour * 60);
   const endMinutes = (endHourPart * 60 + endMinutePart) - (startHour * 60);
 
-  const yStart = (startMinutes / totalMinutes) * 930;
+  const yStart = (startMinutes / totalMinutes) * 930; // Map minutes to pixel height
   const height = ((endMinutes - startMinutes) / totalMinutes) * 930;
 
   return { yStart, height };
@@ -95,10 +104,14 @@ const VerticalTimeline = () => {
 
         {today.map((event, index) => {
             const { yStart, height } = calculatePosition(event.start, event.end);
+            const color = colors[index % colors.length]; // Cycle through the color palette
             return (
-            <EventBlock key={index} style={{ top: `${yStart}px`, height: `${height}px` }}>
+              <EventBlock
+                key={index}
+                style={{ top: `${yStart}px`, height: `${height}px`, backgroundColor: color }}
+              >
                 <div>{event.title}</div>
-                <div>{event.start} - {event.end}</div>
+                <div>{new Date(event.start).getHours()} - {new Date(event.end).getHours()}</div>
             </EventBlock>
             );
         })}

@@ -5,13 +5,14 @@ import CanvasLeft from './canvases/CanvasLeft.js';
 import CanvasCenter from './canvases/CanvasCenter.js';
 import CanvasRight from './canvases/CanvasRight.js';
 import ClockThing from './displays/Clock.js';
+import config from './config.js';
 
 function App(){
   const [profile, setProfile] = useState('default')
 
   useEffect(() => {
     async function getProfile() {
-      const response = await fetch(process.env.REACT_APP_PROFILE_URL);
+      const response = await fetch(`${config.apiUrl}/api/profile`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

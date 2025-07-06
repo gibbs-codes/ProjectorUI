@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import config from "../config";
 
 export default function ToDos(){
     const [toDos, setToDos] = useState([])
@@ -6,7 +7,7 @@ export default function ToDos(){
 
     useEffect(() => {
         async function updateToday() {
-            fetch(process.env.REACT_APP_HABITICA_URL)
+            fetch(`${config.apiUrl}/api/habitica`)
             .then(response => {
                 console.log('Response status:', response);
                 if (!response.ok) {

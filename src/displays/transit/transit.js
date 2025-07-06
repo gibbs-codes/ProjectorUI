@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import checkTime from "../../utils/checkTime";
-
+import config from "../../config";
 
 
 export default function Transit(props) {
@@ -14,7 +14,7 @@ export default function Transit(props) {
 
   useEffect(() => {
     async function getThings() {
-      fetch(process.env.REACT_APP_CTA_URL)
+      fetch(`${config.apiUrl}/api/data`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

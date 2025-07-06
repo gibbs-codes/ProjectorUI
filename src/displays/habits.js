@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import config from "../config";
 
 export default function Habits(){
     const [habits, setHabits] = useState([])
@@ -6,7 +7,7 @@ export default function Habits(){
 
     useEffect(() => {
         async function updateToday() {
-            fetch(process.env.REACT_APP_HABITICA_URL)
+            fetch(`${config.apiUrl}/api/habitica`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

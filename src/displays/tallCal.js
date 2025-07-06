@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import config from '../config';
 
 const TimelineContainer = styled.div`
   width: 370px;
@@ -76,7 +77,7 @@ const VerticalTimeline = () => {
     
         useEffect(() => {
             async function updateToday() {
-                fetch(process.env.REACT_APP_EVENTS_URL)
+                fetch(`${config.apiUrl}/api/events`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

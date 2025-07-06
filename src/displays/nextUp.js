@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { format, parse, isAfter, parseISO } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Art from './art';
+import config from '../config';
 
 const NextUp = () => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const NextUp = () => {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_EVENTS_URL);
+        const response = await fetch(`${config.apiUrl}/api/events`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

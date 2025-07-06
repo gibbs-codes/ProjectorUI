@@ -1,25 +1,47 @@
-FROM node:18-alpine
+# Multi-stage build for React app
+FROM node:18-alpine as builder
 
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to install dependencies
+# Copy package files
 COPY package*.json ./
-RUN npm install
 
-# Copy the .env file explicitly
-COPY .env .env
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Copy the rest of the application code
+# Copy source code
 COPY . .
 
-# Build the React App (now using the .env file)
+# Build the app
 RUN npm run build
 
-# Install the serve package globally
+# Production stage
+FROM node:18-alpine
+
+# Install serve to run the built app
 RUN npm install -g serve
 
-# Expose the port the app runs on
+# Create app directory
+WORKDIR /app
+
+# Copy built app from builder stage
+COPY --from=builder /app/build ./build
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Change ownership
+RUN chown -R nodejs:nodejs /app
+USER nodejs
+
+# Expose port
 EXPOSE 3000
 
-# Define the command to serve the built app
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+# Start the app
 CMD ["serve", "-s", "build", "-l", "3000"]

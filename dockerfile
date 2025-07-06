@@ -19,7 +19,8 @@ RUN npm run build
 # Production stage
 FROM node:18-alpine
 
-# Install serve to run the built app
+# Install serve and curl (for health checks)
+RUN apk add --no-cache curl
 RUN npm install -g serve
 
 # Create app directory

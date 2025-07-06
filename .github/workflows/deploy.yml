@@ -18,7 +18,7 @@ jobs:
       
     - name: Configure Docker environment
       run: |
-        echo "Setting up Docker environment..."
+        echo "Setting up Docker environment for ${{ github.repository }}..."
         
         # Create Docker config directory
         mkdir -p ~/.docker
@@ -32,6 +32,9 @@ jobs:
           "experimental": "disabled"
         }
         EOF
+        
+        # Ensure shared network exists
+        docker network create gibbs-apps 2>/dev/null || echo "Network already exists"
         
         # Test Docker access
         echo "Testing Docker access..."
@@ -82,10 +85,11 @@ jobs:
         # Build the image
         docker build --no-cache -t projector-ui:latest .
         
-        # Run the container
+        # Run the container with shared network
         docker run -d \
           --name projector-ui-production \
           --restart unless-stopped \
+          --network gibbs-apps \
           -p 3000:3000 \
           --env-file .env \
           -e NODE_ENV=production \
@@ -110,6 +114,13 @@ jobs:
           exit 1
         fi
         
+        echo "Testing API connectivity..."
+        if docker exec projector-ui-production curl -f http://ctaaapi-production:3001/health 2>/dev/null; then
+          echo "✅ Can reach CTAAAPI from Projector UI!"
+        else
+          echo "⚠️  Cannot reach CTAAAPI (this is expected on first deploy)"
+        fi
+        
     - name: Clean up old images
       run: |
         docker image prune -f --filter label=app=projector-ui || true
@@ -117,6 +128,8 @@ jobs:
     - name: Show final status
       run: |
         echo "=== Final Status ==="
-        docker ps | grep projector-ui-production
+        docker ps | grep -E "(projector-ui-production|ctaaapi-production)"
         echo "Projector UI is available at http://localhost:3000"
-        echo "Connected to CTAAAPI at http://localhost:3001"
+        echo "CTAAAPI is available at http://localhost:3001"
+        echo "Network: gibbs-apps"
+        docker network inspect gibbs-apps --format='{{range .Containers}}{{.Name}}: {{.IPv4Address}}{{"\n"}}{{end}}'

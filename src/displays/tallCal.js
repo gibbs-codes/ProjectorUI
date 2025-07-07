@@ -51,12 +51,38 @@ const calculatePosition = (startTime, endTime) => {
   const startHour = 6; // Start of the timeline (6 AM)
   const totalMinutes = (24 - startHour) * 60; // Total minutes in the timeline
 
-  const parseTime = (isoString) => {
-    const date = new Date(isoString);
-    return {
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-    };
+  // FIXED: Parse time strings in "7:30 AM" format
+  const parseTime = (timeString) => {
+    // Check if it's already an ISO string (contains 'T' or full date)
+    if (timeString.includes('T') || timeString.includes('-')) {
+      const date = new Date(timeString);
+      return {
+        hour: date.getHours(),
+        minute: date.getMinutes(),
+      };
+    }
+    
+    // Parse "7:30 AM" format
+    const timeRegex = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
+    const match = timeString.trim().match(timeRegex);
+    
+    if (!match) {
+      console.error('Could not parse time:', timeString);
+      return { hour: 6, minute: 0 }; // Default fallback
+    }
+    
+    let hour = parseInt(match[1]);
+    const minute = parseInt(match[2]);
+    const period = match[3].toUpperCase();
+    
+    // Convert to 24-hour format
+    if (period === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+    
+    return { hour, minute };
   };
 
   const { hour: startHourPart, minute: startMinutePart } = parseTime(startTime);
@@ -75,51 +101,94 @@ const VerticalTimeline = () => {
     const [today, setToday] = useState([])
     const [loading, setLoading] = useState(true)
     
-        useEffect(() => {
-            async function updateToday() {
-                fetch(`${config.apiUrl}/api/events`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                }).then(data => { 
-                    setToday(data);
-                }).catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                })
-                setLoading(false);
-            }
-            
-            updateToday();
-        }, [])
-
-
-  return (
-    <div>
-      {loading ? <></> :
-        <TimelineContainer>
-        {hours.map((hour, index) => (
-            <HourBlock key={index}>{hour}</HourBlock>
-        ))}
-
-        {today.map((event, index) => {
-            const { yStart, height } = calculatePosition(event.start, event.end);
-            const color = colors[index % colors.length]; // Cycle through the color palette
-            return (
-              <EventBlock
-                key={index}
-                style={{ top: `${yStart}px`, height: `${height}px`, backgroundColor: color }}
-              >
-                <div>{event.title}</div>
-                <div>{new Date(event.start).getHours()} - {new Date(event.end).getHours()}</div>
-            </EventBlock>
-            );
-        })}
-        </TimelineContainer>
+    useEffect(() => {
+        async function updateToday() {
+            fetch(`${config.apiUrl}/api/events`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => { 
+                console.log('Received events data:', data); // Debug log
+                setToday(data);
+            }).catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            })
+            setLoading(false);
         }
-    </div>
-  );
+        
+        updateToday();
+    }, [])
+
+    return (
+        <div>
+            {loading ? <></> :
+                <TimelineContainer>
+                    {hours.map((hour, index) => (
+                        <HourBlock key={index}>{hour}</HourBlock>
+                    ))}
+
+                    {today.map((event, index) => {
+                        const { yStart, height } = calculatePosition(event.start, event.end);
+                        const color = colors[index % colors.length]; // Cycle through the color palette
+                        
+                        // Format display time properly
+                        const formatDisplayTime = (timeString) => {
+                            const { hour, minute } = parseTime(timeString);
+                            const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+                            const period = hour >= 12 ? 'PM' : 'AM';
+                            return `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
+                        };
+                        
+                        // Helper function to parse time (same as above but accessible here)
+                        const parseTime = (timeString) => {
+                            if (timeString.includes('T') || timeString.includes('-')) {
+                                const date = new Date(timeString);
+                                return {
+                                    hour: date.getHours(),
+                                    minute: date.getMinutes(),
+                                };
+                            }
+                            
+                            const timeRegex = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
+                            const match = timeString.trim().match(timeRegex);
+                            
+                            if (!match) {
+                                return { hour: 6, minute: 0 };
+                            }
+                            
+                            let hour = parseInt(match[1]);
+                            const minute = parseInt(match[2]);
+                            const period = match[3].toUpperCase();
+                            
+                            if (period === 'PM' && hour !== 12) {
+                                hour += 12;
+                            } else if (period === 'AM' && hour === 12) {
+                                hour = 0;
+                            }
+                            
+                            return { hour, minute };
+                        };
+                        
+                        return (
+                            <EventBlock
+                                key={index}
+                                style={{ 
+                                    top: `${yStart}px`, 
+                                    height: `${height}px`, 
+                                    backgroundColor: color 
+                                }}
+                            >
+                                <div>{event.title}</div>
+                                <div>{formatDisplayTime(event.start)} - {formatDisplayTime(event.end)}</div>
+                            </EventBlock>
+                        );
+                    })}
+                </TimelineContainer>
+            }
+        </div>
+    );
 };
 
 export default VerticalTimeline;

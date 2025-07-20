@@ -5,6 +5,7 @@ import CanvasLeft from './canvases/CanvasLeft.js';
 import CanvasCenter from './canvases/CanvasCenter.js';
 import CanvasRight from './canvases/CanvasRight.js';
 import ClockThing from './displays/Clock.js';
+import MessageBanner from './displays/MessageBanner.js';
 import config from './config.js';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
         console.log('Fetching profile from:', `${config.apiUrl}/api/profile`);
         
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         
         const response = await fetch(`${config.apiUrl}/api/profile`, {
           signal: controller.signal,
@@ -52,27 +53,23 @@ function App() {
           console.log('Request timed out, will retry...');
         }
         
-        // Don't immediately set offline for timeout errors, 
-        // as the network might still be working
         if (!error.message.includes('fetch')) {
           setIsOnline(false);
         }
         
-        // Exponential backoff retry for errors
         clearTimeout(retryTimeout);
         retryTimeout = setTimeout(() => {
           console.log('Retrying profile fetch...');
           getProfile();
-        }, 5000); // Wait 5 seconds before retry
+        }, 5000);
       }
     }
 
-    // Network status listeners
     const handleOnline = () => {
       console.log('Network back online');
       setIsOnline(true);
       setLastFetchError(null);
-      getProfile(); // Immediately fetch when back online
+      getProfile();
     };
 
     const handleOffline = () => {
@@ -83,17 +80,15 @@ function App() {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    // Initial fetch
     getProfile();
 
-    // Set up regular interval (only if online)
     fetchInterval = setInterval(() => {
       if (navigator.onLine) {
         getProfile();
       } else {
         console.log('Skipping fetch - browser reports offline');
       }
-    }, 60000); // 1 minute interval
+    }, 60000);
 
     return () => {
       clearInterval(fetchInterval);
@@ -103,11 +98,11 @@ function App() {
     };
   }, []);
 
-  // Show connection status in dev mode
   const showDebugInfo = process.env.NODE_ENV === 'development';
 
   return (
     <div className="App">
+      {/* Debug Info (dev mode only) */}
       {showDebugInfo && (
         <div style={{
           position: 'fixed',
@@ -118,18 +113,22 @@ function App() {
           padding: '5px 10px',
           borderRadius: '5px',
           fontSize: '12px',
-          zIndex: 1000
+          zIndex: 1001
         }}>
           {isOnline ? 'ONLINE' : 'OFFLINE'}
           {lastFetchError && <div>Error: {lastFetchError.substring(0, 30)}...</div>}
         </div>
       )}
       
+      {/* Main Display Components */}
       <CanvasRight profile={profile} />
       <ClockThing />
       <Weather />
       <CanvasCenter profile={profile} />
       <CanvasLeft profile={profile} />
+      
+      {/* Message Banner - slides up from bottom when messages arrive */}
+      <MessageBanner />
     </div>
   );
 }

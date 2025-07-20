@@ -11,7 +11,7 @@ function Art(props) {
             const style = props.style ? props.style : styles[Math.floor(Math.random() * styles.length)];
             
             // Increase limit to get more variety and reduce repetition
-            const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${style}%20painting&fields=id,title,image_id,thumbnail,dimensions&limit=500`);
+            const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${style}%20painting&fields=id,title,image_id,thumbnail,dimensions&limit=100`);
             const data = await res.json();
             
             const filteredPaintings = data.data.filter(art => {

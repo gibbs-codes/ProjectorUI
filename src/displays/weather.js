@@ -9,7 +9,7 @@ export default function Weather(){
 
      useEffect(() => {
          async function getWeather() {
-             fetch(process.env.REACT_APP_WEATHER_URL)
+             fetch(import.meta.env.VITE_WEATHER_URL)
              .then(response => {
                  if (!response.ok) {
                      throw new Error('Network response was not ok');
